@@ -1,135 +1,79 @@
-# WP Dark Mode Plugin - Cypress Automation Test Suite
+# WP Dark Mode Plugin-Test Automation Suite
 
 ## Overview
-This Cypress Test Automation Suite is designed to automate the process of testing the WP Dark Mode plugin functionalities on a WordPress site. The suite includes a series of test scenarios, such as logging into the WordPress admin dashboard, checking the plugin's activation status, enabling dark mode for the admin dashboard, customizing dark mode settings, and validating the applied changes.
+
+This repository contains a Cypress test automation suite designed for testing the WP Dark Mode plugin for WordPress. The test suite automates the process of installing, activating, configuring, and validating the WP Dark Mode plugin. It also ensures that the plugin's settings are properly applied and visible in the WordPress admin dashboard.
 
 ## Setup Requirements
 
-### 1. Install Node.js and npm
-Ensure you have Node.js and npm installed on your machine. You can download and install them from [Node.js official website](https://nodejs.org/).
+1. **Node.js and npm:** 
+   - Ensure that Node.js and npm are installed on your system. You can download and install them from [Node.js official website](https://nodejs.org/).
 
-Verify the installation by running the following commands:
-```bash
-node -v
-npm -v
-```
-
-### 2. Install Cypress
-To set up Cypress, navigate to your project folder and run the following command to install Cypress as a development dependency:
-```bash
-npm install cypress --save-dev
-```
+2. **Cypress Installation:**
+   - Install Cypress as a development dependency in your project:
+     ```bash
+     npm install cypress --save-dev
+     ```
 
 ## Test Scenarios
 
-### 1. Log in to WordPress:
-- Load the environment variables from the `.env` file.
-- Log in to the WordPress admin dashboard.
+The test suite includes the following scenarios:
 
-### 2. Check if WP Dark Mode Plugin is Active:
-- Verify if the WP Dark Mode plugin is active. If it is not installed, the test will install and activate the plugin.
+1. **Log in to WordPress:**
+   - Log in to the WordPress admin dashboard.
 
-### 3. Enable Admin Dashboard Dark Mode:
-- Navigate to `WP Dark Mode → Controls → Admin Panel Dark Mode` and enable dark mode for the admin panel.
-- Validate if the dark mode is applied to the admin dashboard.
+2. **Install and Activate WP Dark Mode Plugin:**
+   - From admin dashboard -> plugins -> add plugins -> search WP Dark Mode and install and activate it.
 
-### 4. Customize WP Dark Mode Settings:
-- Change the floating switch style (select any style except the default).
-- Set the custom switch size to 220.
-- Change the floating switch position to "Left."
-- Disable the keyboard shortcut from the accessibility settings.
-- Enable page-transition animation and change the animation effect.
+3. **Enable and Validate Admin Dashboard Dark Mode:**
+   - Navigate to WP Dark Mode → Controls → Admin Panel Dark Mode and enable it.
+   - Validate if the dark mode is applied.
 
-### 5. Save Settings and Validate:
-- Save all settings after customization.
-- Validate that dark mode is enabled on the front end of the website.
+4. **Customize WP Dark Mode Settings:**
+   - Change Floating Switch Style (select any style except the default).
+   - Set Custom Switch Size to 220.
+   - Change Floating Switch Position to Left.
+   - Disable Keyboard Shortcut from Accessibility Settings.
+   - Enable Page-Transition Animation and change the Animation Effect.
 
-## Cypress Test Suite
+5. **Save Settings and Validate:**
+   - Save all settings after customization and validate if the dark mode is enabled on the front end.
 
-The test suite uses Cypress to automate the above scenarios. Below is an example structure of the Cypress test file:
+## How to Use the Test Suite
 
-```javascript
-describe('WP Dark Mode Plugin Test Suite', () => {
-  
-  beforeEach(() => {
-    cy.visit('http://localhost/wordpress/');
-    cy.viewport(1366, 768);
-    cy.get('.logged-out').click();
-    
-    // Log in to WordPress
-    cy.get('#user_login').type('danial');
-    cy.get('#user_pass').type("Danial@123");
-    cy.get('#wp-submit').click();
-  });
+1. **Clone the Repository:**
+   - Clone the repository to your local machine:
+     ```bash
+     git clone <repository-url>
+     cd <repository-directory>
+     ```
 
-  it('Install WP Dark Mode Plugin', () => {
-    cy.get('#menu-plugins').click();
-    cy.get('.page-title-action').click();
-    cy.get('#search-plugins').type("WP Dark Mode");
-    cy.get('.install-now').click();
-    cy.wait(20000);
-  });
+2. **Install Dependencies:**
+   - Install the necessary dependencies:
+     ```bash
+     npm install
+     ```
 
-  it('Activate WP Dark Mode Plugin', () => {
-    cy.get('#menu-plugins').click();
-    cy.get('#search-plugins').type("WP Dark Mode");
-    cy.get('.activate-now').click();
-  });
+3. **Set Up Environment Variables:**
+   - Create a `.env` file in the root of the project and add your WordPress credentials and any other required configuration:
+     ```
+     WP_USERNAME=your-username
+     WP_PASSWORD=your-password
+     ```
 
-  it('Enable Admin Dark Mode', () => {
-    cy.get('#toplevel_page_wp-dark-mode').click();
-    cy.get('.wp-dark-mode-admin-sidebar-nav-container').click();
-    cy.get('.relative').click(); // Enable Dark Mode
-    cy.get('.bg-blue-500').click(); // Save settings
-  });
+4. **Run Cypress Test Suite:**
+   - Open Cypress Test Runner and run the test suite:
+     ```bash
+     npx cypress open
+     ```
+   - Alternatively, you can run the tests in headless mode:
+     ```bash
+     npx cypress run
+     ```
 
-  it('Customize WP Dark Mode Settings', () => {
-    cy.get('#toplevel_page_wp-dark-mode').click();
-    cy.get('[href="#/switch"]').click();
-    cy.get(':nth-child(3)').click(); // Select custom switch style
-    cy.get('.gap-2 input').clear().type('220'); // Set custom size
-    cy.get(':nth-child(2) > .bg-gray-50').click(); // Set position to Left
-    cy.get('.bg-blue-500').click(); // Save settings
-  });
-
-  it('Disable Keyboard Shortcut', () => {
-    cy.get('#toplevel_page_wp-dark-mode').click();
-    cy.get('[href="#/accessibility"]').click();
-    cy.get('.relative').click(); // Disable keyboard shortcut
-  });
-
-  it('Enable Page Transition Animation', () => {
-    cy.get('#toplevel_page_wp-dark-mode').click();
-    cy.get('[href="#/animation"]').click();
-    cy.get('.w-auto > .relative').click();
-    cy.get(':nth-child(4)').click(); // Select animation effect
-    cy.get('.bg-blue-500').click(); // Save settings
-  });
-
-  it('Validate Dark Mode', () => {
-    cy.get('._track > :nth-child(1)').click();
-  });
-});
-```
+5. **View Results:**
+   - Results will be displayed in the Cypress Test Runner or terminal output if running in headless mode.
 
 ## Demo Video
-You can watch the demo video of this test suite [here](#).
 
-## How to Run the Test Suite
-
-1. Clone the repository to your local machine.
-2. Ensure Node.js and npm are installed.
-3. Install Cypress by running:
-    ```bash
-    npm install cypress --save-dev
-    ```
-4. Add a `.env` file to store environment variables such as WordPress URL, admin credentials, etc.
-5. Open Cypress Test Runner by running:
-    ```bash
-    npx cypress open
-    ```
-6. Select the test to run from the Cypress Test Runner interface.
-
-## Conclusion
-This test suite provides full automation coverage for the WP Dark Mode plugin's core functionalities, including installation, activation, settings customization, and validation. It helps ensure that the plugin functions as expected across different scenarios.
-
+A demo video showcasing the working of the test suite is available here: [Automation Test Suite_Demo Video](<demo-video-link>).
