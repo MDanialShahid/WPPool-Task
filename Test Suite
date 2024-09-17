@@ -1,0 +1,93 @@
+describe('WooCommerce Test Suite', () => {
+  
+  beforeEach(() => {
+    cy.visit('http://localhost/wordpress/');
+    cy.viewport(1366, 768);
+    cy.get('.logged-out').click()
+    
+    cy.get('#user_login').should('be.visible').wait(500)
+    cy.get('#user_login').type('danial')
+    cy.get('#user_pass').type("Danial@123")
+    cy.get('#wp-submit').click()
+
+  })
+    it('Install WP Dark Mode', () => {
+      cy.get('#wp-admin-bar-site-name > [aria-expanded="false"]').click()
+      cy.get('#menu-plugins > .wp-has-submenu > .wp-menu-name').click()
+      cy.get('.page-title-action').click()
+      cy.get('#search-plugins').type("WP Dark Mode")
+      
+      cy.wait(10000)
+      cy.get('.plugin-card-wp-dark-mode > .plugin-card-top > .action-links > .plugin-action-buttons > :nth-child(1) > .install-now').click()  
+      cy.wait(20000)
+    });
+    
+    it('Activate WP Dark Mode', () => {
+      cy.get('#wp-admin-bar-site-name > [aria-expanded="false"]').click()
+      cy.get('#menu-plugins > .wp-has-submenu > .wp-menu-name').click()
+      cy.get('.page-title-action').click()
+      cy.get('#search-plugins').type("WP Dark Mode")
+      
+      cy.wait(10000) 
+      cy.get('.plugin-card-wp-dark-mode > .plugin-card-top > .action-links > .plugin-action-buttons > :nth-child(1) > .button').click()
+    });
+
+    it('Enable Admin Side Dark Mode', () => {
+      cy.get('#wp-admin-bar-site-name > [aria-expanded="false"]').click()
+      cy.get('#toplevel_page_wp-dark-mode > .wp-has-submenu > .wp-menu-name').click()
+      cy.get('.wp-dark-mode-admin-sidebar-nav-container > .flex-col').should('be.visible').click();
+      cy.get('.router-link-active').should('be.visible').click();
+      cy.wait(500)
+      cy.get(':nth-child(1) > .sm\\:items-center > .w-auto > .relative').should('be.visible').click()
+      cy.get('.bg-blue-500').click()
+    });
+
+    it('Validate Admin Side Dark Mode', () => {
+      cy.get('#wp-admin-bar-site-name > [aria-expanded="false"]').click()
+      cy.get('#toplevel_page_wp-dark-mode > .wp-has-submenu > .wp-menu-name').click()
+      cy.get('.wp-dark-mode-admin-sidebar-nav-container > .flex-col').should('be.visible').click();
+      cy.get('.router-link-active').should('be.visible').click();
+      cy.wait(500)
+      cy.get(':nth-child(1) > .sm\\:items-center > .w-auto > .relative').should('be.visible').click()
+      cy.get('.bg-blue-500').click()
+      cy.get('._track >:nth-child(2)').should('be.visible').click()
+      cy.wait(1000)
+    });
+
+    it('Customization -> Floating Switch Style, Size and Position', () => {
+      cy.get('#wp-admin-bar-site-name > [aria-expanded="false"]').click()
+      cy.get('#toplevel_page_wp-dark-mode > .wp-has-submenu > .wp-menu-name').click()
+      cy.wait(500)
+      cy.get(':nth-child(2) > .wp-dark-mode-admin-sidebar-nav-container > .justify-between > .flex > .text-base').should('be.visible').click();
+      cy.get('[href="#/switch"]').should('be.visible').click();
+      cy.get('.rounded.gap-6 > .rounded > .flex-wrap > :nth-child(3)').click() //Custom Style
+      cy.get('.bg-gray-50 > :nth-child(6)').click()
+      cy.get('.py-5 > .gap-3 > .items-center.gap-2 > .gap-2 input').clear().type('220') //Custom Size
+      cy.get(':nth-child(2) > .bg-gray-50 > .bg-gray-100').click() //Position Left
+      cy.get('.bg-blue-500').click()
+    });
+    
+    it('Accessibility -> Disable Keyboard Shortcut', () => {
+      cy.get('#wp-admin-bar-site-name > [aria-expanded="false"]').click()
+      cy.get('#toplevel_page_wp-dark-mode > .wp-has-submenu > .wp-menu-name').click()
+      cy.wait(500)
+      cy.get(':nth-child(3) > .wp-dark-mode-admin-sidebar-nav-container > .justify-between > .flex > .text-base').click();
+      cy.get('[href="#/accessibility"]').click();
+      cy.get('.bg-white.gap-5 > :nth-child(1) > .sm\\:items-center > .w-auto > .relative').click()
+    });
+
+    it('Customization -> Site Animation', () => {
+      cy.get('#wp-admin-bar-site-name > [aria-expanded="false"]').click()
+      cy.get('#toplevel_page_wp-dark-mode > .wp-has-submenu > .wp-menu-name').click()
+      cy.wait(500)
+      cy.get(':nth-child(2) > .wp-dark-mode-admin-sidebar-nav-container > .justify-between > .flex > .text-base').click();
+      cy.get('[href="#/animation"]').click();
+      cy.get('.w-auto > .relative').click()
+      cy.get('.rounded > :nth-child(4) > .flex').click()
+      cy.get('.bg-blue-500').click()
+    });
+
+    it('Validate Dark Mode', () => {
+      cy.get('._track > :nth-child(1)').click()
+    });
+});
