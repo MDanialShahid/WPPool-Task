@@ -27,6 +27,6 @@ jobs:
 
       # Run Cypress tests
       - name: Run Cypress tests
-        run: npx cypress run
+        run: npx cypress open
         env:
           CYPRESS_BASE_URL: http://localhost/wordpress/
