@@ -1,0 +1,39 @@
+name: WooCommerce Test Suite CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events on the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  # Allows manual runs from the Actions tab
+  workflow_dispatch:
+
+# Define the jobs for the workflow
+jobs:
+  build:
+    # Use the latest version of Ubuntu for the runner
+    runs-on: ubuntu-latest
+
+    # Define the sequence of tasks to execute
+    steps:
+      # Step to check out the code from the repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # Install Node.js (required for Cypress)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run Cypress tests
+      - name: Run Cypress tests
+        run: npx cypress run
+        env:
+          CYPRESS_BASE_URL: http://localhost/wordpress/
