@@ -44,7 +44,7 @@ The test suite includes the following scenarios:
 1. **Clone the Repository:**
    - Clone the repository to your local machine:
      ```bash
-     git clone <https://github.com/MDanialShahid/WPPool-Task.git>
+     git clone <repository-url>
      cd <repository-directory>
      ```
 
