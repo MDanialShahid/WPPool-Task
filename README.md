@@ -76,4 +76,4 @@ The test suite includes the following scenarios:
 
 ## Demo Video
 
-A demo video showcasing the working of the test suite is available here: [Automation Test Suite_Demo Video](<demo-video-link>).
+A demo video showcasing the working of the test suite is available here: [Automation Test Suite_Demo Video](<https://drive.google.com/file/d/17UGEaN0zKaKDewc4856Cdej7xiFTN0vG/view?usp=drive_link>).
